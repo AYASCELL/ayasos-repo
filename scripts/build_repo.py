@@ -6,6 +6,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 import json
 
@@ -56,6 +57,44 @@ def write_override_file(manifest: dict, output_dir: Path) -> None:
         seen.add(name)
         lines.append(f"{name} optional utils")
     (output_dir / "override").write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+
+
+def sign_release(output_dir: Path, release_file: Path) -> None:
+    if shutil.which("gpg") is None:
+        return
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        env = os.environ.copy()
+        env["GNUPGHOME"] = tmpdir
+        key_id = "AYAS OS Repo <info@example.com>"
+        subprocess.run(
+            ["gpg", "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", key_id, "ed25519", "sign", "0"],
+            check=True,
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["gpg", "--batch", "--yes", "--armor", "--output", str(release_file.with_suffix(release_file.suffix + ".gpg")), "--detach-sign", str(release_file)],
+            check=True,
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["gpg", "--batch", "--yes", "--clearsign", "--output", str(release_file.parent / "InRelease"), str(release_file)],
+            check=True,
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["gpg", "--batch", "--armor", "--export", key_id],
+            check=True,
+            env=env,
+            stdout=(output_dir / "RepoKey.asc").open("w", encoding="utf-8"),
+            stderr=subprocess.DEVNULL,
+        )
 
 
 def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str, str]]) -> None:
@@ -142,6 +181,7 @@ def generate_repo(manifest: dict) -> None:
     with release_file.open("w", encoding="utf-8") as fh:
         subprocess.run(cmd, check=True, cwd=OUTPUT, stdout=fh)
 
+    sign_release(OUTPUT, release_file)
     write_index_html(manifest, OUTPUT, pkg_links)
 
 
