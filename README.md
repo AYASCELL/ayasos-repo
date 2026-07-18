@@ -109,7 +109,13 @@ Eğer sürüm numarası tutarsız olursa:
 - belirli sürüm kurulumu çalışmayabilir
 - güncelleme akışı bozulabilir
 
-## 10. Yerel test
+## 10. Script klasöründeki dosyalar
+Bu klasörde iki yardımcı dosya bulunur:
+
+- `scripts/build_repo.py`: Asıl oluşturma betiği. `apps.json` dosyasındaki paketleri okur, `.deb` dosyalarını `public/pool/main/...` altına kopyalar, APT metadata dosyalarını (`Packages`, `Packages.gz`, `Release`, `InRelease`, `RepoKey.asc`) üretir ve ana sayfa olan `public/index.html` dosyasını oluşturur.
+- `scripts/build_repo.sh`: Bu Python betiğini çağıran basit bash sarmalayıcısıdır. Çoğu durumda bunu çalıştırmak yeterlidir.
+
+Nasıl kullanılır?
 ```bash
 sudo apt-get update
 sudo apt-get install -y dpkg-dev apt-utils
@@ -117,7 +123,26 @@ chmod +x scripts/build_repo.sh
 ./scripts/build_repo.sh
 ```
 
-## 11. Sorun giderme
+Eğer doğrudan Python betiğini çalıştırmak isterseniz:
+```bash
+python3 scripts/build_repo.py
+```
+
+Bir güncelleme yaptığınızda izlenecek akış:
+1. Yeni `.deb` dosyasını oluşturun.
+2. `apps.json` dosyasını güncelleyin.
+3. `./scripts/build_repo.sh` komutunu çalıştırın.
+4. Sonuçları kontrol edin ve değişiklikleri GitHub’a push edin.
+
+## 11. Yerel test
+```bash
+sudo apt-get update
+sudo apt-get install -y dpkg-dev apt-utils
+chmod +x scripts/build_repo.sh
+./scripts/build_repo.sh
+```
+
+## 12. Sorun giderme
 Eğer workflow hata verirse:
 - Actions sekmesinden hatayı kontrol edin.
 - `./scripts/build_repo.sh` komutunu yerelde çalıştırın.
