@@ -85,13 +85,31 @@ Aynı paket için yeni sürüm eklemek için:
 3. `apps.json` içine yeni bir kayıt ekleyin.
 4. Repo yeniden build edilir.
 
-## 8. Yerel test
+## 8. Sürüm numaraları neden önemlidir?
+Deb paketlerinde sürüm numarası çok önemlidir. Çünkü APT, aynı paketin farklı sürümlerini ayırt etmek için bunu kullanır.
+
+- `DEBIAN/control` dosyasındaki `Version:` değeri, `.deb` paketinin kendi sürümüdür.
+- `apps.json` dosyasındaki `version` değeri, APT deposundaki kayıt için kullanılır.
+- İki değer birbirinin aynı olmalıdır.
+
+Örnek:
+```text
+DEBIAN/control -> Version: 1.1.0
+apps.json      -> "version": "1.1.0"
+```
+
+Eğer sürüm numarası tutarsız olursa:
+- paket bulunmayabilir
+- belirli sürüm kurulumu çalışmayabilir
+- güncelleme akışı bozulabilir
+
+## 9. Yerel test
 ```bash
 chmod +x scripts/build_repo.sh
 ./scripts/build_repo.sh
 ```
 
-## 9. Sorun giderme
+## 10. Sorun giderme
 Eğer workflow hata verirse:
 - Actions sekmesinden hatayı kontrol edin.
 - `./scripts/build_repo.sh` komutunu yerelde çalıştırın.
