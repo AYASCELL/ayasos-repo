@@ -32,12 +32,13 @@ https://<kullanici-adiniz>.github.io/<repo-adiniz>/
 ```
 
 ## 3. APT kaynağı ekleme
-Debian/Ubuntu sistemine bu depoyu eklemek için:
+Debian 13 (trixie) sistemine bu depoyu eklemek için en pratik yöntem şöyledir:
 ```bash
-curl -fsSL https://<kullanici-adiniz>.github.io/<repo-adiniz>/RepoKey.asc | sudo gpg --dearmor -o /usr/share/keyrings/ayasos-archive-keyring.gpg
-printf 'deb [arch=amd64 signed-by=/usr/share/keyrings/ayasos-archive-keyring.gpg] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ trixie main\n' | sudo tee /etc/apt/sources.list.d/ayasos.list
+echo 'deb [trusted=yes] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
+
+Bu yöntem, kendi test/kişisel sistemlerde çalışır. Daha güvenli imzalı depo kurmak isterseniz ileride eklenebilir.
 
 ## 4. Paket kurma
 Örnek paket kurmak için:
@@ -55,7 +56,13 @@ sudo apt install ayas-tools=1.0.0
 sudo apt install ayas-ui=1.1.0
 ```
 
-## 6. Yeni paket ekleme
+## 6. Paket kaldırma
+Kurulu paketi kaldırmak için:
+```bash
+sudo apt remove ayas-app
+```
+
+## 7. Yeni paket ekleme
 Yeni bir paket eklemek için:
 1. Yeni paket klasörü oluşturun, örneğin `examples/myapp-1.0.0/`.
 2. `DEBIAN/control` dosyası oluşturun.
@@ -77,14 +84,14 @@ dpkg-deb --build examples/myapp-1.0.0 examples/myapp_1.0.0_amd64.deb
 ./scripts/build_repo.sh
 ```
 
-## 7. Yeni sürüm ekleme
+## 8. Yeni sürüm ekleme
 Aynı paket için yeni sürüm eklemek için:
 1. Yeni klasör oluşturun, örneğin `examples/myapp-1.1.0/`.
 2. Yeni `.deb` üretin.
 3. `apps.json` içine yeni bir kayıt ekleyin.
 4. Repo yeniden build edilir.
 
-## 8. Sürüm numaraları neden önemlidir?
+## 9. Sürüm numaraları neden önemlidir?
 Deb paketlerinde sürüm numarası çok önemlidir. Çünkü APT, aynı paketin farklı sürümlerini ayırt etmek için bunu kullanır.
 
 - `DEBIAN/control` dosyasındaki `Version:` değeri, `.deb` paketinin kendi sürümüdür.
@@ -102,13 +109,13 @@ Eğer sürüm numarası tutarsız olursa:
 - belirli sürüm kurulumu çalışmayabilir
 - güncelleme akışı bozulabilir
 
-## 9. Yerel test
+## 10. Yerel test
 ```bash
 chmod +x scripts/build_repo.sh
 ./scripts/build_repo.sh
 ```
 
-## 10. Sorun giderme
+## 11. Sorun giderme
 Eğer workflow hata verirse:
 - Actions sekmesinden hatayı kontrol edin.
 - `./scripts/build_repo.sh` komutunu yerelde çalıştırın.
