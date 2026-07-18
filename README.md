@@ -34,9 +34,7 @@ https://<kullanici-adiniz>.github.io/<repo-adiniz>/
 ## 3. APT kaynağı ekleme
 Debian/Ubuntu sistemine bu depoyu eklemek için:
 ```bash
-sudo tee /etc/apt/sources.list.d/ayasos.list > /dev/null <<'EOF2'
-deb [arch=amd64] https://<kullanici-adiniz>.github.io/<repo-adiniz> ./
-EOF2
+printf 'deb [arch=amd64] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ bookworm main\n' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 

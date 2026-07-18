@@ -63,6 +63,12 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
         f"<tr><td>{html.escape(pkg_name)}</td><td>{html.escape(version)}</td><td><a href=\"{html.escape(link)}\">{html.escape(link)}</a></td></tr>"
         for pkg_name, version, link in pkg_links
     )
+    suite = manifest.get("suite", "bookworm")
+    components = manifest.get("components", ["main"])
+    owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "your-user")
+    repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "your-repo")
+    repo_uri = f"https://{owner}.github.io/{repo_name}/"
+    apt_source = f"deb [arch=amd64] {repo_uri} {suite} {' '.join(components)}"
     html_content = f"""<!doctype html>
 <html lang=\"tr\">
 <head>
@@ -74,7 +80,7 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
   <h1>{html.escape(manifest.get('label', 'AYAS OS APT Repo'))}</h1>
   <p>Bu depo, AYAS OS için Debian tabanlı .deb paketlerini GitHub Pages üzerinden sunar.</p>
   <p>APT ayarı:</p>
-  <pre>deb [arch=amd64] https://{html.escape(os.environ.get('GITHUB_REPOSITORY_OWNER', 'your-user'))}/{html.escape(os.environ.get('GITHUB_REPOSITORY_NAME', 'your-repo'))} ./</pre>
+  <pre>{html.escape(apt_source)}</pre>
   <table>
     <thead><tr><th>Paket</th><th>Sürüm</th><th>Dosya</th></tr></thead>
     <tbody>{rows}</tbody>
