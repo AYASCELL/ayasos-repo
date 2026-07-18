@@ -1,1 +1,1 @@
-Repository documentation is maintained in docs/README.md.
+Ayas OS deposu. Geliştirme Ve Test aşamasında 
