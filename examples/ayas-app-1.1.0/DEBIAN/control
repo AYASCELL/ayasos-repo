@@ -1,0 +1,7 @@
+Package: ayas-app
+Version: 1.1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: AYAS OS <info@example.com>
+Description: AYAS OS sample application

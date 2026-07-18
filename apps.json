@@ -1,1 +1,20 @@
-
+{
+  "label": "AYAS OS APT Repository",
+  "description": "AYAS OS için Debian tabanlı paket deposu",
+  "suite": "bookworm",
+  "codename": "ayas",
+  "components": ["main"],
+  "architectures": ["amd64"],
+  "packages": [
+    {
+      "name": "ayas-app",
+      "version": "1.0.0",
+      "file": "examples/ayas-app_1.0.0_amd64.deb"
+    },
+    {
+      "name": "ayas-app",
+      "version": "1.1.0",
+      "file": "examples/ayas-app_1.1.0_amd64.deb"
+    }
+  ]
+}
