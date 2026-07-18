@@ -32,13 +32,13 @@ https://AYASCELL.github.io/ayasos-repo/
 ```
 
 ## 3. APT kaynağı ekleme
-Debian 13 (trixie) sistemine bu depoyu eklemek için en pratik yöntem şöyledir:
+Debian 13 (trixie) sistemine bu depoyu eklemek için en pratik yöntem, test/kişisel kullanım için doğrulanan `trusted=yes` yapılandırmasıdır:
 ```bash
 echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
-Bu yöntem, kendi test/kişisel sistemlerde çalışır. Daha güvenli imzalı depo kurmak isterseniz ileride eklenebilir.
+Bu yöntem, statik GitHub Pages üzerinden sunulan basit deposu için çalışır. Daha güvenli imzalı bir depo kurmak isterseniz ileride eklenebilir.
 
 ## 4. Paket kurma
 Örnek paket kurmak için:
@@ -111,6 +111,8 @@ Eğer sürüm numarası tutarsız olursa:
 
 ## 10. Yerel test
 ```bash
+sudo apt-get update
+sudo apt-get install -y dpkg-dev apt-utils
 chmod +x scripts/build_repo.sh
 ./scripts/build_repo.sh
 ```
@@ -119,4 +121,5 @@ chmod +x scripts/build_repo.sh
 Eğer workflow hata verirse:
 - Actions sekmesinden hatayı kontrol edin.
 - `./scripts/build_repo.sh` komutunu yerelde çalıştırın.
+- APT hatası alıyorsanız, kaynak satırının `trusted=yes` içerdiğini doğrulayın.
 - Hata mesajını düzeltip tekrar push edin.

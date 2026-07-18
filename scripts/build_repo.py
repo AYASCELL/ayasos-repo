@@ -97,7 +97,7 @@ def sign_release(output_dir: Path, release_file: Path) -> None:
         )
 
 
-def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str, str]]) -> None:
+def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str, str, str]]) -> None:
     rows = "".join(
         f"<tr><td>{html.escape(pkg_name)}</td><td>{html.escape(version)}</td><td><a href=\"{html.escape(link)}\">{html.escape(link)}</a></td></tr>"
         for pkg_name, version, link in pkg_links
@@ -107,7 +107,11 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "AYASCELL")
     repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "ayasos-repo")
     repo_uri = f"https://{owner}.github.io/{repo_name}/"
-    apt_source = f"deb [arch=amd64] {repo_uri} {suite} {' '.join(components)}"
+    trusted = manifest.get("trusted", True)
+    options = "arch=amd64"
+    if trusted:
+        options = f"{options} trusted=yes"
+    apt_source = f"deb [{options}] {repo_uri} {suite} {' '.join(components)}"
     html_content = f"""<!doctype html>
 <html lang=\"tr\">
 <head>
