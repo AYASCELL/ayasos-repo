@@ -35,7 +35,7 @@ https://<kullanici-adiniz>.github.io/<repo-adiniz>/
 Debian/Ubuntu sistemine bu depoyu eklemek için:
 ```bash
 curl -fsSL https://<kullanici-adiniz>.github.io/<repo-adiniz>/RepoKey.asc | sudo gpg --dearmor -o /usr/share/keyrings/ayasos-archive-keyring.gpg
-printf 'deb [arch=amd64 signed-by=/usr/share/keyrings/ayasos-archive-keyring.gpg] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ bookworm main\n' | sudo tee /etc/apt/sources.list.d/ayasos.list
+printf 'deb [arch=amd64 signed-by=/usr/share/keyrings/ayasos-archive-keyring.gpg] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ trixie main\n' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 

@@ -1,7 +1,7 @@
 {
   "label": "AYAS OS APT Repository",
   "description": "AYAS OS için Debian tabanlı paket deposu",
-  "suite": "bookworm",
+  "suite": "trixie",
   "codename": "ayas",
   "components": ["main"],
   "architectures": ["amd64"],

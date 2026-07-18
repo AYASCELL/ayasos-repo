@@ -102,7 +102,7 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
         f"<tr><td>{html.escape(pkg_name)}</td><td>{html.escape(version)}</td><td><a href=\"{html.escape(link)}\">{html.escape(link)}</a></td></tr>"
         for pkg_name, version, link in pkg_links
     )
-    suite = manifest.get("suite", "bookworm")
+    suite = manifest.get("suite", "trixie")
     components = manifest.get("components", ["main"])
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "your-user")
     repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "your-repo")
@@ -136,7 +136,7 @@ def generate_repo(manifest: dict) -> None:
     (OUTPUT / ".nojekyll").write_text("", encoding="utf-8")
     write_override_file(manifest, OUTPUT)
 
-    suite = manifest.get("suite", "bookworm")
+    suite = manifest.get("suite", "trixie")
     components = manifest.get("components", ["main"])
     architectures = manifest.get("architectures", ["amd64"])
     pool_root = OUTPUT / "pool" / "main"
