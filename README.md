@@ -16,7 +16,7 @@ git init
 git add .
 git commit -m "Initial apt repo setup"
 git branch -M main
-git remote add origin https://github.com/<kullanici-adiniz>/<repo-adiniz>.git
+git remote add origin https://github.com/AYASCELL/ayasos-repo.git
 git push -u origin main
 ```
 
@@ -28,13 +28,13 @@ git push -u origin main
 
 Yayın adresi genelde şu formdadır:
 ```text
-https://<kullanici-adiniz>.github.io/<repo-adiniz>/
+https://AYASCELL.github.io/ayasos-repo/
 ```
 
 ## 3. APT kaynağı ekleme
 Debian 13 (trixie) sistemine bu depoyu eklemek için en pratik yöntem şöyledir:
 ```bash
-echo 'deb [trusted=yes] https://<kullanici-adiniz>.github.io/<repo-adiniz>/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
+echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 

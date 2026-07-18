@@ -104,8 +104,8 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
     )
     suite = manifest.get("suite", "trixie")
     components = manifest.get("components", ["main"])
-    owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "your-user")
-    repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "your-repo")
+    owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "AYASCELL")
+    repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "ayasos-repo")
     repo_uri = f"https://{owner}.github.io/{repo_name}/"
     apt_source = f"deb [arch=amd64] {repo_uri} {suite} {' '.join(components)}"
     html_content = f"""<!doctype html>
