@@ -29,7 +29,7 @@ jobs:
 
       - name: Build example Debian packages
         run: |
-          mkdir -p examples/ayas-app-1.0.0/DEBIAN examples/ayas-app-1.0.0/usr/bin examples/ayas-app-1.1.0/DEBIAN examples/ayas-app-1.1.0/usr/bin
+          mkdir -p examples/ayas-app-1.0.0/DEBIAN examples/ayas-app-1.0.0/usr/bin examples/ayas-app-1.1.0/DEBIAN examples/ayas-app-1.1.0/usr/bin examples/ayas-tools-1.0.0/DEBIAN examples/ayas-tools-1.0.0/usr/bin examples/ayas-tools-1.1.0/DEBIAN examples/ayas-tools-1.1.0/usr/bin examples/ayas-ui-1.0.0/DEBIAN examples/ayas-ui-1.0.0/usr/bin examples/ayas-ui-1.1.0/DEBIAN examples/ayas-ui-1.1.0/usr/bin
           cat > examples/ayas-app-1.0.0/DEBIAN/control <<'EOF'
           Package: ayas-app
           Version: 1.0.0
@@ -58,8 +58,68 @@ jobs:
           echo "AYAS app 1.1.0"
           EOF
           chmod 755 examples/ayas-app-1.1.0/usr/bin/ayas-app
+          cat > examples/ayas-tools-1.0.0/DEBIAN/control <<'EOF'
+          Package: ayas-tools
+          Version: 1.0.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS tools application
+          EOF
+          cat > examples/ayas-tools-1.0.0/usr/bin/ayas-tools <<'EOF'
+          #!/bin/sh
+          echo "AYAS tools 1.0.0"
+          EOF
+          chmod 755 examples/ayas-tools-1.0.0/usr/bin/ayas-tools
+          cat > examples/ayas-tools-1.1.0/DEBIAN/control <<'EOF'
+          Package: ayas-tools
+          Version: 1.1.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS tools application
+          EOF
+          cat > examples/ayas-tools-1.1.0/usr/bin/ayas-tools <<'EOF'
+          #!/bin/sh
+          echo "AYAS tools 1.1.0"
+          EOF
+          chmod 755 examples/ayas-tools-1.1.0/usr/bin/ayas-tools
+          cat > examples/ayas-ui-1.0.0/DEBIAN/control <<'EOF'
+          Package: ayas-ui
+          Version: 1.0.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS user interface application
+          EOF
+          cat > examples/ayas-ui-1.0.0/usr/bin/ayas-ui <<'EOF'
+          #!/bin/sh
+          echo "AYAS UI 1.0.0"
+          EOF
+          chmod 755 examples/ayas-ui-1.0.0/usr/bin/ayas-ui
+          cat > examples/ayas-ui-1.1.0/DEBIAN/control <<'EOF'
+          Package: ayas-ui
+          Version: 1.1.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS user interface application
+          EOF
+          cat > examples/ayas-ui-1.1.0/usr/bin/ayas-ui <<'EOF'
+          #!/bin/sh
+          echo "AYAS UI 1.1.0"
+          EOF
+          chmod 755 examples/ayas-ui-1.1.0/usr/bin/ayas-ui
           dpkg-deb --build examples/ayas-app-1.0.0 examples/ayas-app_1.0.0_amd64.deb
           dpkg-deb --build examples/ayas-app-1.1.0 examples/ayas-app_1.1.0_amd64.deb
+          dpkg-deb --build examples/ayas-tools-1.0.0 examples/ayas-tools_1.0.0_amd64.deb
+          dpkg-deb --build examples/ayas-tools-1.1.0 examples/ayas-tools_1.1.0_amd64.deb
+          dpkg-deb --build examples/ayas-ui-1.0.0 examples/ayas-ui_1.0.0_amd64.deb
+          dpkg-deb --build examples/ayas-ui-1.1.0 examples/ayas-ui_1.1.0_amd64.deb
 
       - name: Build apt repository
         run: |
