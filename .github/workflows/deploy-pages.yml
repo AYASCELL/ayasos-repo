@@ -27,6 +27,40 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y dpkg-dev apt-utils
 
+      - name: Build example Debian packages
+        run: |
+          mkdir -p examples/ayas-app-1.0.0/DEBIAN examples/ayas-app-1.0.0/usr/bin examples/ayas-app-1.1.0/DEBIAN examples/ayas-app-1.1.0/usr/bin
+          cat > examples/ayas-app-1.0.0/DEBIAN/control <<'EOF'
+          Package: ayas-app
+          Version: 1.0.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS sample application
+          EOF
+          cat > examples/ayas-app-1.0.0/usr/bin/ayas-app <<'EOF'
+          #!/bin/sh
+          echo "AYAS app 1.0.0"
+          EOF
+          chmod 755 examples/ayas-app-1.0.0/usr/bin/ayas-app
+          cat > examples/ayas-app-1.1.0/DEBIAN/control <<'EOF'
+          Package: ayas-app
+          Version: 1.1.0
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: AYAS OS <info@example.com>
+          Description: AYAS OS sample application
+          EOF
+          cat > examples/ayas-app-1.1.0/usr/bin/ayas-app <<'EOF'
+          #!/bin/sh
+          echo "AYAS app 1.1.0"
+          EOF
+          chmod 755 examples/ayas-app-1.1.0/usr/bin/ayas-app
+          dpkg-deb --build examples/ayas-app-1.0.0 examples/ayas-app_1.0.0_amd64.deb
+          dpkg-deb --build examples/ayas-app-1.1.0 examples/ayas-app_1.1.0_amd64.deb
+
       - name: Build apt repository
         run: |
           chmod +x scripts/build_repo.sh
