@@ -1,4 +1,4 @@
-# AYAS OS APT Repository
+# AYAS OS APT Repository (Geliştirme Ve Test Aşamasında)
 
 Bu depo, AYAS OS için GitHub Pages üzerinden sunulan basit bir Debian/Ubuntu APT paket deposudur.
 
