@@ -1,4 +1,4 @@
 public/
 *.pyc
 __pycache__/
-*.deb
+

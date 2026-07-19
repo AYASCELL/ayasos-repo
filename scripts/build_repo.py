@@ -66,7 +66,7 @@ def sign_release(output_dir: Path, release_file: Path) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         env = os.environ.copy()
         env["GNUPGHOME"] = tmpdir
-        key_id = "AYAS OS Repo <info@example.com>"
+        key_id = "AYAS OS Repo <ayascellsoftware@gmail.com>"
         subprocess.run(
             ["gpg", "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", key_id, "ed25519", "sign", "0"],
             check=True,

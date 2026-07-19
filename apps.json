@@ -7,34 +7,14 @@
   "architectures": ["amd64"],
   "packages": [
     {
-      "name": "ayas-app",
+      "name": "ayasfetch",
       "version": "1.0.0",
-      "file": "examples/ayas-app_1.0.0_amd64.deb"
+      "file": "examples/ayasfetch_1.0.0_amd64.deb"
     },
     {
-      "name": "ayas-app",
-      "version": "1.1.0",
-      "file": "examples/ayas-app_1.1.0_amd64.deb"
-    },
-    {
-      "name": "ayas-tools",
+      "name": "ayascell-browser",
       "version": "1.0.0",
-      "file": "examples/ayas-tools_1.0.0_amd64.deb"
-    },
-    {
-      "name": "ayas-tools",
-      "version": "1.1.0",
-      "file": "examples/ayas-tools_1.1.0_amd64.deb"
-    },
-    {
-      "name": "ayas-ui",
-      "version": "1.0.0",
-      "file": "examples/ayas-ui_1.0.0_amd64.deb"
-    },
-    {
-      "name": "ayas-ui",
-      "version": "1.1.0",
-      "file": "examples/ayas-ui_1.1.0_amd64.deb"
+      "file": "examples/ayascell-browser_1.0.0_amd64.deb"
     }
   ]
 }

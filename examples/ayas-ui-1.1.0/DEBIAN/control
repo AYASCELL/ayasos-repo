@@ -1,7 +1,0 @@
-Package: ayas-ui
-Version: 1.1.0
-Section: utils
-Priority: optional
-Architecture: amd64
-Maintainer: AYAS OS <info@example.com>
-Description: AYAS OS user interface application
