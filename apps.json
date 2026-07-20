@@ -12,6 +12,11 @@
       "file": "examples/ayasfetch_1.0.0_amd64.deb"
     },
     {
+      "name": "ayasfetch",
+      "version": "1.0.2",
+      "file": "examples/ayasfetch_1.0.2_amd64.deb"
+    },
+    {
       "name": "ayascell-browser",
       "version": "1.0.0",
       "file": "examples/ayascell-browser_1.0.0_amd64.deb"
