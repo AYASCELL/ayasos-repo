@@ -1,1 +1,1 @@
-Ayas OS deposu. Geliştirme Ve Test aşamasında 
+Ayas OS resmi APT deposu.

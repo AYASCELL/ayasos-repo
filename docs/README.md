@@ -1,150 +1,53 @@
-# AYAS OS APT Repository (Geliştirme Ve Test Aşamasında)
+# AYAS OS Resmi APT Deposudur
 
-Bu depo, AYAS OS için GitHub Pages üzerinden sunulan basit bir Debian/Ubuntu APT paket deposudur.
+Bu depo, AYAS OS için GitHub Pages üzerinden sunulan Debian/Ubuntu APT paket deposudur.
 
 ## Özellikler
-- Birden fazla uygulama desteği
-- Birden fazla sürüm desteği
-- GitHub Actions ile otomatik build/deploy
-- .deb paketlerini APT deposu yapısına dönüştürür
-- GitHub Pages üzerinden yayınlanır
+- Kolay ve hızlı kurulum
+- Sürüm kontrol desteği
+- Güvenli APT altyapısı
 
-## 1. Depoyu GitHub’a yükleme
-```bash
-cd /workspaces/ayasos-repo
-git init
-git add .
-git commit -m "Initial apt repo setup"
-git branch -M main
-git remote add origin https://github.com/AYASCELL/ayasos-repo.git
-git push -u origin main
-```
-
-## 2. GitHub Pages ayarı
-1. GitHub repo sayfasında Settings açın.
-2. Sol menüden Pages seçin.
-3. Source bölümünde GitHub Actions seçin.
-4. Actions sekmesinden workflow’un çalışmasını bekleyin.
-
-Yayın adresi genelde şu formdadır:
-```text
-https://AYASCELL.github.io/ayasos-repo/
-```
-
-## 3. APT kaynağı ekleme
-Debian 13 (trixie) sistemine bu depoyu eklemek için en pratik yöntem, test/kişisel kullanım için doğrulanan `trusted=yes` yapılandırmasıdır:
+## 1. APT Kaynağı Ekleme
+Debian/Ubuntu tabanlı sisteminize bu depoyu eklemek için terminalinizde şu komutları sırasıyla çalıştırın:
 ```bash
 echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
-Bu yöntem, statik GitHub Pages üzerinden sunulan basit deposu için çalışır. Daha güvenli imzalı bir depo kurmak isterseniz ileride eklenebilir.
-
-## 4. Paket kurma
-Örnek paket kurmak için:
+## 2. Paket Kurma
+Depoyu ekledikten sonra uygulamalarımızı kolayca indirebilirsiniz:
 ```bash
-sudo apt install ayas-app
-sudo apt install ayas-tools
-sudo apt install ayas-ui
+sudo apt install ayasfetch
+sudo apt install ayascell-browser
 ```
 
-## 5. Belirli sürüm kurma
-Belirli sürümü kurmak için:
+## 3. Belirli Bir Sürümü Kurma
+Eğer uygulamanın eski veya belirli bir sürümünü kurmak isterseniz:
 ```bash
-sudo apt install ayas-app=1.1.0
-sudo apt install ayas-tools=1.0.0
-sudo apt install ayas-ui=1.1.0
+sudo apt install ayasfetch=1.0.0
 ```
 
-## 6. Paket kaldırma
-Kurulu paketi kaldırmak için:
+## 4. Paket Kaldırma
+Kurduğunuz bir paketi kaldırmak için:
 ```bash
-sudo apt remove ayas-app
+sudo apt remove ayascell-browser
 ```
 
-## 7. Yeni paket ekleme
-Yeni bir paket eklemek için:
-1. Yeni paket klasörü oluşturun, örneğin `examples/myapp-1.0.0/`.
-2. `DEBIAN/control` dosyası oluşturun.
-3. Paket içeriğini `usr/` altına koyun.
-4. `.deb` dosyasını oluşturun:
-```bash
-dpkg-deb --build examples/myapp-1.0.0 examples/myapp_1.0.0_amd64.deb
-```
-5. `apps.json` dosyasına paket bilgisi ekleyin:
-```json
-{
-  "name": "myapp",
-  "version": "1.0.0",
-  "file": "examples/myapp_1.0.0_amd64.deb"
-}
-```
-6. Build’i tekrar çalıştırın:
-```bash
-./scripts/build_repo.sh
-```
+## 5. Lisans ve Kullanım Koşulları / License and Terms of Use (ÖNEMLİ/IMPORTANT)
+Bu proje **AYASCELL LİSANSI** ile korunmaktadır. 
+Bu projeyi veya paketlerini kullanan, kopyalayan veya üzerine inşa eden geliştiriciler aşağıdaki kurallara uymak **zorundadır**:
+1. Orijinal geliştiricinin AYASCELL olduğu açıkça belirtilmeli ve proje/profil açıklamalarında **"Powered by AYASCELL"** ibaresi bulunmalıdır.
+2. Paket ve proje adları ("ayasfetch", "Ayascell-Browser" vb.) birebir kullanılamaz; değiştirilerek özgün isimler verilmelidir.
+3. Proje hiçbir şekilde zararlı, yasa dışı veya yanıltıcı amaçlarla kullanılamaz.
+4. Geliştiriciler projeyi kullanırken tüm riski üstlenirler; AYASCELL olası veri veya donanım kayıplarından sorumlu tutulamaz.
 
-## 8. Yeni sürüm ekleme
-Aynı paket için yeni sürüm eklemek için:
-1. Yeni klasör oluşturun, örneğin `examples/myapp-1.1.0/`.
-2. Yeni `.deb` üretin.
-3. `apps.json` içine yeni bir kayıt ekleyin.
-4. Repo yeniden build edilir.
+---
 
-## 9. Sürüm numaraları neden önemlidir?
-Deb paketlerinde sürüm numarası çok önemlidir. Çünkü APT, aynı paketin farklı sürümlerini ayırt etmek için bunu kullanır.
+This project is protected by the **AYASCELL LICENSE**.
+Developers who use, copy, or build upon this project or its packages **must** comply with the following rules:
+1. It must be clearly stated that the original developer is AYASCELL, and the phrase **"Powered by AYASCELL"** must be included in the project/profile descriptions.
+2. Package and project names (e.g., "ayasfetch", "Ayascell-Browser") cannot be used exactly as they are; they must be changed to unique names.
+3. The project cannot be used for malicious, illegal, or deceptive purposes in any way.
+4. Developers assume all risk when using the project; AYASCELL cannot be held liable for possible data or hardware losses.
 
-- `DEBIAN/control` dosyasındaki `Version:` değeri, `.deb` paketinin kendi sürümüdür.
-- `apps.json` dosyasındaki `version` değeri, APT deposundaki kayıt için kullanılır.
-- İki değer birbirinin aynı olmalıdır.
-
-Örnek:
-```text
-DEBIAN/control -> Version: 1.1.0
-apps.json      -> "version": "1.1.0"
-```
-
-Eğer sürüm numarası tutarsız olursa:
-- paket bulunmayabilir
-- belirli sürüm kurulumu çalışmayabilir
-- güncelleme akışı bozulabilir
-
-## 10. Script klasöründeki dosyalar
-Bu klasörde iki yardımcı dosya bulunur:
-
-- `scripts/build_repo.py`: Asıl oluşturma betiği. `apps.json` dosyasındaki paketleri okur, `.deb` dosyalarını `public/pool/main/...` altına kopyalar, APT metadata dosyalarını (`Packages`, `Packages.gz`, `Release`, `InRelease`, `RepoKey.asc`) üretir ve ana sayfa olan `public/index.html` dosyasını oluşturur.
-- `scripts/build_repo.sh`: Bu Python betiğini çağıran basit bash sarmalayıcısıdır. Çoğu durumda bunu çalıştırmak yeterlidir.
-
-Nasıl kullanılır?
-```bash
-sudo apt-get update
-sudo apt-get install -y dpkg-dev apt-utils
-chmod +x scripts/build_repo.sh
-./scripts/build_repo.sh
-```
-
-Eğer doğrudan Python betiğini çalıştırmak isterseniz:
-```bash
-python3 scripts/build_repo.py
-```
-
-Bir güncelleme yaptığınızda izlenecek akış:
-1. Yeni `.deb` dosyasını oluşturun.
-2. `apps.json` dosyasını güncelleyin.
-3. `./scripts/build_repo.sh` komutunu çalıştırın.
-4. Sonuçları kontrol edin ve değişiklikleri GitHub’a push edin.
-
-## 11. Yerel test
-```bash
-sudo apt-get update
-sudo apt-get install -y dpkg-dev apt-utils
-chmod +x scripts/build_repo.sh
-./scripts/build_repo.sh
-```
-
-## 12. Sorun giderme
-Eğer workflow hata verirse:
-- Actions sekmesinden hatayı kontrol edin.
-- `./scripts/build_repo.sh` komutunu yerelde çalıştırın.
-- APT hatası alıyorsanız, kaynak satırının `trusted=yes` içerdiğini doğrulayın.
-- Hata mesajını düzeltip tekrar push edin.
+Tüm şartları okumak için / To read all the terms, see the [LICENSE](LICENSE) file.

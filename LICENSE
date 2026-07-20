@@ -1,0 +1,36 @@
+AYASCELL YAZILIM LİSANSI (AYASCELL SOFTWARE LICENSE)
+
+Telif Hakkı (c) 2026 AYASCELL <ayascellsoftware@gmail.com>
+Copyright (c) 2026 AYASCELL <ayascellsoftware@gmail.com>
+
+=== TÜRKÇE (TURKISH) ===
+
+Bu yazılımı (AYAS OS APT Repository, kaynak kodları ve ilgili paketleri) kullanan, kopyalayan, değiştiren veya temel alarak yeni projeler geliştiren herkes aşağıdaki şartları peşinen kabul etmiş sayılır:
+
+1. ATIF VE KAYNAK BELİRTME ZORUNLULUĞU (ATTRIBUTION):
+Bu projeyi veya kodlarını temel alarak kendi projesini, deposunu veya işletim sistemini geliştiren kişi veya kurumlar, orijinal geliştiricinin "AYASCELL" olduğunu projelerinin görünür bir yerinde (README dosyası, Hakkında sayfası, arayüz vs.) açıkça belirtmek zorundadır. Ayrıca, bu projeyi çatalayarak (fork) veya kopyalayarak kullanan kişi veya kurumların, GitHub (veya benzeri platformlardaki) profillerinde ya da proje açıklamalarında "Powered by AYASCELL" ibaresine yer vermesi ZORUNLUDUR.
+
+2. PAKET İSİMLENDİRME VE MARKA KORUMASI:
+Bu deponun veya içerisindeki uygulamaların (ayasfetch, Ayascell-Browser vb.) kopyalanıp değiştirilmesi veya yeniden dağıtılması durumunda, oluşturulan yeni paketlerin, depoların veya uygulamaların isimleri orijinaliyle AYNI OLAMAZ ve telif ihlali/karışıklık yaratacak kadar BENZEYEMEZ. Kullanıcılar kendi projelerini ve paketlerini kendi adlarıyla isimlendirmelidir (Örn: "ayasfetch" yerine "kendifetch").
+
+3. KÖTÜYE KULLANIM VE OLUMSUZ DURUMLAR:
+Bu yazılım, yasa dışı faaliyetlerde, siber saldırılarda, zararlı yazılım (malware) dağıtımında veya kullanıcıları yanıltıcı (phishing vb.) eylemlerde kullanılamaz. Projenin itibarını zedeleyecek her türlü kullanım yasaktır.
+
+4. SORUMLULUK REDDİ VE GARANTİ YOKLUĞU (DISCLAIMER):
+BU YAZILIM "OLDUĞU GİBİ" (AS IS), HİÇBİR AÇIK VEYA ZIMNİ GARANTİ OLMADAN SAĞLANMIŞTIR. YAZARLAR VEYA TELİF HAKKI SAHİPLERİ (AYASCELL), YAZILIMIN KULLANIMINDAN DOĞAN HİÇBİR SÖZLEŞME İHLALİ, DONANIM/YAZILIM HASARI, VERİ KAYBI VEYA DİĞER DURUMLARDAN KAYNAKLANAN YÜKÜMLÜLÜKLERDEN SORUMLU TUTULAMAZ. YAZILIMIN KULLANIMINDAN DOĞACAK TÜM RİSK VE HUKUKİ SORUMLULUK TAMAMEN KULLANICIYA AİTTİR.
+
+=== ENGLISH ===
+
+Anyone who uses, copies, modifies, or develops new projects based on this software (AYAS OS APT Repository, source codes, and related packages) is deemed to have accepted the following terms in advance:
+
+1. ATTRIBUTION REQUIREMENT:
+Individuals or organizations developing their own project, repository, or operating system based on this project or its codes must clearly state that the original developer is "AYASCELL" in a visible place (README file, About page, interface, etc.). Furthermore, those who fork or copy this project MUST include the phrase "Powered by AYASCELL" in their GitHub (or similar platforms) profiles or project descriptions.
+
+2. PACKAGE NAMING AND BRAND PROTECTION:
+In case this repository or the applications within it (ayasfetch, Ayascell-Browser, etc.) are copied, modified, or redistributed, the names of the newly created packages, repositories, or applications CANNOT BE THE SAME as the original and CANNOT BE SIMILAR enough to cause copyright infringement/confusion. Users must name their own projects and packages with their own names.
+
+3. ABUSE AND NEGATIVE SITUATIONS:
+This software cannot be used in illegal activities, cyber attacks, malware distribution, or deceptive actions (such as phishing) against users. Any use that damages the reputation of the project is strictly prohibited.
+
+4. DISCLAIMER OF WARRANTY:
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS (AYASCELL) BE LIABLE FOR ANY CLAIM, DAMAGES (INCLUDING HARDWARE/SOFTWARE DAMAGE OR DATA LOSS) OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. ALL RISK AND LEGAL RESPONSIBILITY ARISING FROM THE USE OF THE SOFTWARE BELONGS ENTIRELY TO THE USER.
