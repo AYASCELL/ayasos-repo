@@ -26,6 +26,9 @@ echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixi
 # Repolar eklendikten veya silindikten sonra paket listesini yeniliyoruz
 apt-get update -y
 
+# İşletim sisteminin paket listesi kilidini tamamen bırakması için 1 saniye bekle
+sleep 1
+
 # ---------------------------------------------------------
 # 4. PROGRAM KURULUM VE KALDIRMA BÖLÜMÜ
 # ---------------------------------------------------------
