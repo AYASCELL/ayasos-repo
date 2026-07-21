@@ -3,6 +3,9 @@
 # Kullanıcıya soru sorulmasını engelleyerek tam otomatik kurulum sağlar
 export DEBIAN_FRONTEND=noninteractive
 
+# APT Kilit Bekleme Seçeneği (Aynı anda başka bir kilit varsa 60 saniyeye kadar sakince bekler, hataya düşmez)
+APT_OPTS="-o DPkg::Lock::Timeout=60"
+
 echo "AYAS OS Uzaktan Kurulum Yöneticisi Başladı..."
 
 # ---------------------------------------------------------
@@ -24,22 +27,22 @@ echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixi
 # 3. SİSTEMİ GÜNCELLEME
 # ---------------------------------------------------------
 # Repolar eklendikten veya silindikten sonra paket listesini yeniliyoruz
-apt-get update -y
+apt-get $APT_OPTS update -y
 
 # ---------------------------------------------------------
 # 4. PROGRAM KURULUM VE KALDIRMA BÖLÜMÜ
 # ---------------------------------------------------------
 # Kurulmasını istediğin paketleri buraya yazıyorsun
-apt-get install -y ayasfetch ayascell-browser
+apt-get $APT_OPTS install -y ayasfetch ayascell-browser
 
 # Eğer ileride kullanıcılardan silinmesini istediğin paketler olursa:
-# apt-get purge -y istenmeyen-paket
-# apt-get autoremove -y
+# apt-get $APT_OPTS purge -y istenmeyen-paket
+# apt-get $APT_OPTS autoremove -y
 
 # ---------------------------------------------------------
 # 5. EKSTRA İŞLEMLER VE OPTİMİZASYONLAR
 # ---------------------------------------------------------
 # Örnek: Yalnızca süresi geçmiş (eski sürüm) indirmeleri temizler, önbelleği korur
-apt-get autoclean
+apt-get $APT_OPTS autoclean
 
 echo "Tüm işlemler başarıyla tamamlandı!"
