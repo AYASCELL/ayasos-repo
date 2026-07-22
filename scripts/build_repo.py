@@ -33,15 +33,28 @@ def load_manifest() -> dict:
         return json.load(fh)
 
 
-def copy_package(pkg: dict, pool_root: Path) -> Path:
-    source = (ROOT / pkg["file"]).resolve()
-    if not source.exists():
-        fail(f"Package file not found: {source}")
+import urllib.request
 
+def copy_package(pkg: dict, pool_root: Path) -> Path:
     safe_name = re.sub(r"[^A-Za-z0-9.+-]+", "-", pkg["name"])
     safe_version = re.sub(r"[^A-Za-z0-9.+-]+", "-", str(pkg["version"]))
     dest_dir = pool_root / safe_name / safe_version
     dest_dir.mkdir(parents=True, exist_ok=True)
+
+    if "url" in pkg:
+        url = pkg["url"]
+        filename = url.split("/")[-1]
+        dest_path = dest_dir / filename
+        print(f"Downloading package from URL: {url}")
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req) as resp, open(dest_path, "wb") as out:
+            shutil.copyfileobj(resp, out)
+        return dest_path
+
+    source = (ROOT / pkg["file"]).resolve()
+    if not source.exists():
+        fail(f"Package file not found: {source}")
+
     dest_path = dest_dir / source.name
     shutil.copy2(source, dest_path)
     return dest_path
