@@ -22,19 +22,19 @@
       "file": "packages/ayascell-browser/ayascell-browser_1.0.0_amd64.deb"
     },
     {
-      "name": "ayasos-base-files",
-      "version": "1.0.0",
-      "file": "packages/base-files/base-files_1.0.0_amd64.deb"
+      "name": "base-files",
+      "version": "13-101ayasos1",
+      "file": "packages/base-files/base-files_13-101ayasos1_all.deb"
     },
     {
       "name": "ayasos-desktop-branding",
-      "version": "1.0.0",
-      "file": "packages/ayasos-desktop-branding/ayasos-desktop-branding_1.0.0_amd64.deb"
+      "version": "1.0.1+ayasos1",
+      "file": "packages/ayasos-desktop-branding/ayasos-desktop-branding_1.0.1+ayasos1_all.deb"
     },
     {
       "name": "ayasos-system",
-      "version": "1.0.0",
-      "file": "packages/ayasos-system/ayasos-system_1.0.0_amd64.deb"
+      "version": "1.0.1+ayasos1",
+      "file": "packages/ayasos-system/ayasos-system_1.0.1+ayasos1_all.deb"
     }
   ]
 }
