@@ -23,8 +23,8 @@
     },
     {
       "name": "base-files",
-      "version": "14-101ayasos1",
-      "file": "packages/base-files/base-files_14-101ayasos1_all.deb"
+      "version": "14-101ayasos2",
+      "file": "packages/base-files/base-files_14-101ayasos2_all.deb"
     },
     {
       "name": "ayasos-desktop-branding",
