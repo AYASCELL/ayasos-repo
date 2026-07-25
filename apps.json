@@ -24,7 +24,7 @@
     {
       "name": "ayasos-base-files",
       "version": "1.0.0",
-      "file": "packages/ayasos-base-files/ayasos-base-files_1.0.0_all.deb"
+      "file": "packages/base-files/base-files_1.0.0_amd64.deb"
     },
     {
       "name": "ayasos-desktop-branding",
