@@ -4,13 +4,21 @@ Bu depo, AYAS OS için GitHub Pages üzerinden sunulan Debian/Ubuntu APT paket d
 
 ## Özellikler
 - Kolay ve hızlı kurulum
-- Sürüm kontrol desteği
+- Çoklu dağıtım ve sürüm kontrol desteği (AYAS OS 13 / 14)
 - Güvenli APT altyapısı
 
 ## 1. APT Kaynağı Ekleme
-Debian/Ubuntu tabanlı sisteminize bu depoyu eklemek için terminalinizde şu komutları sırasıyla çalıştırın:
+Kullandığınız AYAS OS ve Debian/Ubuntu sürümüne uygun komutu terminalinizde çalıştırarak depoyu sisteminize ekleyebilirsiniz:
+
+### AYAS OS 13 (`trixie`) Kullanıcıları İçin:
 ```bash
 echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
+sudo apt update
+```
+
+### AYAS OS 14 (`forky`) Kullanıcıları İçin:
+```bash
+echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ forky main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
