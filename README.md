@@ -10,13 +10,13 @@ Bu depo, AYAS OS için GitHub Pages üzerinden sunulan Debian/Ubuntu APT paket d
 ## 1. APT Kaynağı Ekleme
 Kullandığınız AYAS OS ve Debian/Ubuntu sürümüne uygun komutu terminalinizde çalıştırarak depoyu sisteminize ekleyebilirsiniz:
 
-### AYAS OS 13 (`trixie`) Kullanıcıları İçin:
+### AYAS OS 13 / Debian 13 Stable (`trixie`) Kullanıcıları İçin:
 ```bash
 echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
-### AYAS OS 14 (`forky`) Kullanıcıları İçin:
+### Debian 14 Unstable (`forky`) Kullanıcıları İçin:
 ```bash
 echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ forky main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
