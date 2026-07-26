@@ -56,6 +56,41 @@
       "name": "ananicy-rules",
       "version": "1.1.46-101ayasos1",
       "file": "packages/ananicy-rules/ananicy-rules_1.1.46-101ayasos1_amd64.deb"
+    },
+    {
+      "name": "ayasos-codecs-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-codecs-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-creative-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-creative-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-desktop-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-desktop-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-fonts-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-fonts-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-gameutils-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-gameutils-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-libreoffice-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-libreoffice-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-office-meta",
+      "version": "1.0.0",
+      "file": "packages/ayasos-meta/ayasos-office-meta_1.0.0_all.deb"
     }
   ]
 }
