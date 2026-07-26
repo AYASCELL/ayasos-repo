@@ -46,6 +46,16 @@
       "name": "ayasos-system",
       "version": "1.0.1+ayasos1",
       "file": "packages/ayasos-system/ayasos-system_1.0.1+ayasos1_all.deb"
+    },
+    {
+      "name": "ananicy-cpp",
+      "version": "1.2.0-101ayasos1",
+      "file": "packages/ananicy-cpp/ananicy-cpp_1.2.0-101ayasos1_amd64.deb"
+    },
+    {
+      "name": "ananicy-rules",
+      "version": "1.1.46-101ayasos1",
+      "file": "packages/ananicy-rules/ananicy-rules_1.1.46-101ayasos1_amd64.deb"
     }
   ]
 }
