@@ -110,12 +110,14 @@ def sign_release(output_dir: Path, release_file: Path) -> None:
         )
 
 
-def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str, str, str]]) -> None:
+def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str, str, str, list[str]]]) -> None:
     rows = "".join(
-        f"<tr><td>{html.escape(pkg_name)}</td><td>{html.escape(version)}</td><td><a href=\"{html.escape(link)}\">{html.escape(link)}</a></td></tr>"
-        for pkg_name, version, link in pkg_links
+        f"<tr><td>{html.escape(pkg_name)}</td><td>{html.escape(version)}</td><td>{html.escape(', '.join(suites))}</td><td><a href=\"{html.escape(link)}\">{html.escape(link)}</a></td></tr>"
+        for pkg_name, version, link, suites in pkg_links
     )
-    suite = manifest.get("suite", "trixie")
+    
+    # Desteklenen sürümleri (suites) oku
+    suites = manifest.get("suites", [manifest.get("suite", "trixie")])
     components = manifest.get("components", ["main"])
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "AYASCELL")
     repo_name = os.environ.get("GITHUB_REPOSITORY_NAME", "ayasos-repo")
@@ -124,21 +126,25 @@ def write_index_html(manifest: dict, output_dir: Path, pkg_links: list[tuple[str
     options = "arch=amd64"
     if trusted:
         options = f"{options} trusted=yes"
-    apt_source = f"deb [{options}] {repo_uri} {suite} {' '.join(components)}"
+
+    apt_sources_html = ""
+    for suite in suites:
+        apt_source = f"deb [{options}] {repo_uri} {suite} {' '.join(components)}"
+        apt_sources_html += f"<h3>{html.escape(suite)} sürümü için APT komutu:</h3><pre>{html.escape(apt_source)}</pre>"
+
     html_content = f"""<!doctype html>
-<html lang=\"tr\">
+<html lang="tr">
 <head>
-  <meta charset=\"utf-8\">
+  <meta charset="utf-8">
   <title>{html.escape(manifest.get('label', 'AYAS OS APT Repo'))}</title>
-  <style>body{{font-family:Arial,sans-serif;max-width:900px;margin:2rem auto;line-height:1.6}}table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #ddd;padding:0.6rem;text-align:left}}th{{background:#f5f5f5}}</style>
+  <style>body{{font-family:Arial,sans-serif;max-width:900px;margin:2rem auto;line-height:1.6}}table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #ddd;padding:0.6rem;text-align:left}}th{{background:#f5f5f5}}pre{{background:#f4f4f4;padding:10px;border-radius:4px}}</style>
 </head>
 <body>
   <h1>{html.escape(manifest.get('label', 'AYAS OS APT Repo'))}</h1>
   <p>Bu depo, AYAS OS için Debian tabanlı .deb paketlerini GitHub Pages üzerinden sunar.</p>
-  <p>APT ayarı:</p>
-  <pre>{html.escape(apt_source)}</pre>
+  {apt_sources_html}
   <table>
-    <thead><tr><th>Paket</th><th>Sürüm</th><th>Dosya</th></tr></thead>
+    <thead><tr><th>Paket</th><th>Sürüm</th><th>Desteklenen Dağıtımlar (Suites)</th><th>Dosya Yolu</th></tr></thead>
     <tbody>{rows}</tbody>
   </table>
 </body>
@@ -153,52 +159,88 @@ def generate_repo(manifest: dict) -> None:
     (OUTPUT / ".nojekyll").write_text("", encoding="utf-8")
     write_override_file(manifest, OUTPUT)
 
-    suite = manifest.get("suite", "trixie")
+    # 1. Dağıtım sürümlerini (suites) al
+    suites = manifest.get("suites", [manifest.get("suite", "trixie")])
     components = manifest.get("components", ["main"])
     architectures = manifest.get("architectures", ["amd64"])
     pool_root = OUTPUT / "pool" / "main"
     pool_root.mkdir(parents=True, exist_ok=True)
 
-    pkg_links: list[tuple[str, str, str]] = []
+    pkg_links: list[tuple[str, str, str, list[str]]] = []
+
+    # 2. Tüm paketleri fiziki havuza (pool) kopyala
     for pkg in manifest.get("packages", []):
         copied = copy_package(pkg, pool_root)
         rel = copied.relative_to(OUTPUT).as_posix()
-        pkg_links.append((pkg["name"], pkg["version"], rel))
+        pkg_suites = pkg.get("suites", suites)  # Belirtilmediyse tüm sürümlere ekle
+        pkg_links.append((pkg["name"], str(pkg["version"]), rel, pkg_suites))
 
-    for component in components:
-        for arch in architectures:
-            packages_dir = OUTPUT / "dists" / suite / component / f"binary-{arch}"
-            packages_dir.mkdir(parents=True, exist_ok=True)
-            packages_file = packages_dir / "Packages"
-            gz_path = packages_dir / "Packages.gz"
-            with packages_file.open("w", encoding="utf-8") as fh:
-                subprocess.run(
-                    ["dpkg-scanpackages", "--multiversion", "pool/main", "override", "./"],
-                    check=True,
-                    cwd=OUTPUT,
-                    stdout=fh,
-                )
-            with packages_file.open("rb") as src, gzip.open(gz_path, "wb") as dst:
-                shutil.copyfileobj(src, dst)
+    # 3. Her bir sürüm (suite) için ayrı izole dists fihristi oluştur
+    for suite in suites:
+        for component in components:
+            for arch in architectures:
+                packages_dir = OUTPUT / "dists" / suite / component / f"binary-{arch}"
+                packages_dir.mkdir(parents=True, exist_ok=True)
+                packages_file = packages_dir / "Packages"
+                gz_path = packages_dir / "Packages.gz"
 
-    release_file = OUTPUT / "dists" / suite / "Release"
-    release_file.parent.mkdir(parents=True, exist_ok=True)
-    cmd = [
-        "apt-ftparchive",
-        "-o", "APT::FTPArchive::Release::Origin=AYAS OS",
-        "-o", f"APT::FTPArchive::Release::Label={manifest.get('label', 'AYAS OS APT Repo')}",
-        "-o", f"APT::FTPArchive::Release::Suite={suite}",
-        "-o", f"APT::FTPArchive::Release::Codename={manifest.get('codename', suite)}",
-        "-o", f"APT::FTPArchive::Release::Components={','.join(components)}",
-        "-o", f"APT::FTPArchive::Release::Architectures={','.join(architectures)}",
-        "-o", f"APT::FTPArchive::Release::Description={manifest.get('description', 'AYAS OS package repository')}",
-        "release",
-        str(OUTPUT / "dists" / suite),
-    ]
-    with release_file.open("w", encoding="utf-8") as fh:
-        subprocess.run(cmd, check=True, cwd=OUTPUT, stdout=fh)
+                # Sadece bu sürümün paketlerini taramak için geçici bir klasör oluştur
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    tmp_path = Path(tmpdir)
+                    tmp_pool = tmp_path / "pool" / "main"
+                    tmp_pool.mkdir(parents=True, exist_ok=True)
 
-    sign_release(OUTPUT, release_file)
+                    if (OUTPUT / "override").exists():
+                        (tmp_path / "override").symlink_to((OUTPUT / "override").resolve())
+
+                    # Bu suite'e ait olan paketleri geçici havuza symlink ile bağla
+                    for pkg in manifest.get("packages", []):
+                        pkg_suites = pkg.get("suites", suites)
+                        if suite in pkg_suites:
+                            safe_name = re.sub(r"[^A-Za-z0-9.+-]+", "-", pkg["name"])
+                            safe_version = re.sub(r"[^A-Za-z0-9.+-]+", "-", str(pkg["version"]))
+                            filename = pkg.get("url").split("/")[-1] if "url" in pkg else Path(pkg["file"]).name
+
+                            src_file = OUTPUT / "pool" / "main" / safe_name / safe_version / filename
+                            dest_dir = tmp_pool / safe_name / safe_version
+                            dest_dir.mkdir(parents=True, exist_ok=True)
+
+                            if src_file.exists():
+                                (dest_dir / filename).symlink_to(src_file.resolve())
+
+                    # Sadece ilgili sürümün paketlerini tara
+                    with packages_file.open("w", encoding="utf-8") as fh:
+                        subprocess.run(
+                            ["dpkg-scanpackages", "--multiversion", "pool/main", "override", "./"],
+                            check=True,
+                            cwd=tmpdir,
+                            stdout=fh,
+                        )
+
+                # Packages dosyasını .gz olarak sıkıştır
+                with packages_file.open("rb") as src, gzip.open(gz_path, "wb") as dst:
+                    shutil.copyfileobj(src, dst)
+
+        # Release dosyasını oluştur ve imzala
+        release_file = OUTPUT / "dists" / suite / "Release"
+        release_file.parent.mkdir(parents=True, exist_ok=True)
+        cmd = [
+            "apt-ftparchive",
+            "-o", "APT::FTPArchive::Release::Origin=AYAS OS",
+            "-o", f"APT::FTPArchive::Release::Label={manifest.get('label', 'AYAS OS APT Repo')}",
+            "-o", f"APT::FTPArchive::Release::Suite={suite}",
+            "-o", f"APT::FTPArchive::Release::Codename={manifest.get('codename', suite)}",
+            "-o", f"APT::FTPArchive::Release::Components={','.join(components)}",
+            "-o", f"APT::FTPArchive::Release::Architectures={','.join(architectures)}",
+            "-o", f"APT::FTPArchive::Release::Description={manifest.get('description', 'AYAS OS package repository')}",
+            "release",
+            str(OUTPUT / "dists" / suite),
+        ]
+        with release_file.open("w", encoding="utf-8") as fh:
+            subprocess.run(cmd, check=True, cwd=OUTPUT, stdout=fh)
+
+        sign_release(OUTPUT, release_file)
+
     write_index_html(manifest, OUTPUT, pkg_links)
 
 

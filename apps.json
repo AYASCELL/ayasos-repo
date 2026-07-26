@@ -1,10 +1,17 @@
 {
   "label": "AYAS OS APT Repository",
   "description": "AYAS OS için Debian tabanlı paket deposu",
-  "suite": "trixie",
+  "suites": [
+    "trixie",
+    "forky"
+  ],
   "codename": "ayas",
-  "components": ["main"],
-  "architectures": ["amd64"],
+  "components": [
+    "main"
+  ],
+  "architectures": [
+    "amd64"
+  ],
   "packages": [
     {
       "name": "ayasfetch",
@@ -19,6 +26,10 @@
     {
       "name": "ayascell-browser",
       "version": "1.0.0",
+      "suites": [
+        "trixie",
+        "forky"
+      ],
       "file": "packages/ayascell-browser/ayascell-browser_1.0.0_amd64.deb"
     },
     {
