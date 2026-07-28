@@ -91,6 +91,11 @@
       "name": "ayasos-office-meta",
       "version": "1.0.0",
       "file": "packages/ayasos-meta/ayasos-office-meta_1.0.0_all.deb"
+    },
+    {
+      "name": "ayasos-updater-manager",
+      "version": "1.0.0",
+      "file": "packages/ayasos-updater-manager/ayasos-updater-manager_1.0.0_amd64.deb"
     }
   ]
 }
