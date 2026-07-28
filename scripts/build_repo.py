@@ -76,17 +76,26 @@ def sign_release(output_dir: Path, release_file: Path) -> None:
     if shutil.which("gpg") is None:
         return
 
+    private_key = os.environ.get("GPG_PRIVATE_KEY")
+    if not private_key:
+        print("Warning: GPG_PRIVATE_KEY environment variable not found. Skipping signature.")
+        return
+
     with tempfile.TemporaryDirectory() as tmpdir:
         env = os.environ.copy()
         env["GNUPGHOME"] = tmpdir
-        key_id = "AYAS OS Repo <ayascellsoftware@gmail.com>"
+        
+        # Import the private key
         subprocess.run(
-            ["gpg", "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", key_id, "ed25519", "sign", "0"],
-            check=True,
+            ["gpg", "--batch", "--yes", "--import"],
+            input=private_key.encode("utf-8"),
             env=env,
+            check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
+        
+        key_id = "ayascellsoftware@gmail.com"
         subprocess.run(
             ["gpg", "--batch", "--yes", "--armor", "--output", str(release_file.with_suffix(release_file.suffix + ".gpg")), "--detach-sign", str(release_file)],
             check=True,

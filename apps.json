@@ -1,6 +1,7 @@
 {
   "label": "AYAS OS APT Repository",
   "description": "AYAS OS için Debian tabanlı paket deposu",
+  "trusted": false,
   "suites": [
     "trixie",
     "forky"

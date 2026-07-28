@@ -28,6 +28,8 @@ jobs:
           sudo apt-get install -y dpkg-dev apt-utils
 
       - name: Build apt repository
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
           chmod +x scripts/build_repo.sh
           ./scripts/build_repo.sh

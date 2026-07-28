@@ -12,13 +12,15 @@ Kullandığınız AYAS OS ve Debian/Ubuntu sürümüne uygun komutu terminaliniz
 
 ### AYAS OS 13 / Debian 13 Stable (`trixie`) Kullanıcıları İçin:
 ```bash
-echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
+wget -O - https://AYASCELL.github.io/ayasos-repo/RepoKey.asc | sudo tee /etc/apt/trusted.gpg.d/ayasos.asc
+echo 'deb [arch=amd64] https://AYASCELL.github.io/ayasos-repo/ trixie main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
 ### Debian 14 Unstable (`forky`) Kullanıcıları İçin:
 ```bash
-echo 'deb [arch=amd64 trusted=yes] https://AYASCELL.github.io/ayasos-repo/ forky main' | sudo tee /etc/apt/sources.list.d/ayasos.list
+wget -O - https://AYASCELL.github.io/ayasos-repo/RepoKey.asc | sudo tee /etc/apt/trusted.gpg.d/ayasos.asc
+echo 'deb [arch=amd64] https://AYASCELL.github.io/ayasos-repo/ forky main' | sudo tee /etc/apt/sources.list.d/ayasos.list
 sudo apt update
 ```
 
