@@ -97,11 +97,6 @@
       "name": "ayasos-updater-manager",
       "version": "1.0.0",
       "file": "packages/ayasos-updater-manager/ayasos-updater-manager_1.0.0_amd64.deb"
-    },
-    {
-      "name": "vi3ecode",
-      "version": "0.2.9",
-      "file": "packages/vi3ecode/vi3ecode_0.2.9_amd64.deb"
     }
   ]
 }
